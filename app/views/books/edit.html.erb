@@ -1,5 +1,17 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
+		<% if @book.errors.any? %>
+			<div id="error_explanation">
+				<h3>
+					<%= @book.errors.count %>error prohibited this obj from being saved:
+				</h3>
+				<ul>
+					<% @book.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
 
 		<h1>Editing Book</h1>
 
