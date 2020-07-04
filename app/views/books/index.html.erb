@@ -18,7 +18,8 @@
 					<th></th>
 					<th>Title</th>
 					<th>Opinion</th>
-					<th colspan="3"></th>
+					<th>コメント数</th>
+					<th>いいね数</th>
 				</tr>
 			</thead>
 
@@ -32,6 +33,18 @@
 					</td>
 					<td><%= link_to book.title, book_path(book), class: "book_#{book.id}" %></td>
 					<td><%= book.body %></td>
+					<td><%= book.book_comments.count %></td>
+					<td>
+						<% if book.favorited_by?(current_user) %>
+						<%= link_to book_favorites_path(book), method: :delete do %>
+						<%= book.favorites.count %> いいね
+						<% end %>
+						<% else %>
+						<%= link_to book_favorites_path(book), method: :post do %>
+						<%= book.favorites.count %> いいね
+						<% end %>
+						<% end %>
+					</td>
 				</tr>
 				<% end %>
 			</tbody>
