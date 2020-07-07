@@ -30,18 +30,8 @@
 					</td>
 					<td><%= link_to @book.title, book_path(@book) %></td>
 					<td><%= @book.body %></td>
-					<td>
-						<% if @book.favorited_by?(current_user) %>
-							<%= link_to book_favorites_path(@book), method: :delete do %>
-							<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
-							<%= @book.favorites.count %> いいね
-							<% end %>
-							<% else %>
-							<%= link_to book_favorites_path(@book), method: :post do %>
-							<i class="fa fa-heart-o" aria-hidden="true"></i>
-							<%= @book.favorites.count %> いいね
-							<% end %>
-						<% end %>
+					<td id="favorites_buttons_<%= @book.id %>">
+						<%= render partial: 'favorites/favorite', locals: { book: @book} %>
 					</td>
 					<td>コメント数:<%= @book.book_comments.count %></td>
 					<% if @book.user == current_user %>
@@ -50,21 +40,13 @@
 					<% end %>
 				</tr>
 		</table>
-		<ol>
-			<li><% @book.book_comments.each do |book_comment| %>
-			<%= attachment_image_tag(book_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %>
-			<%= book_comment.user.name %>
-			<%= book_comment.comment %>
-			<% if book_comment.user == current_user %>
-			<%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete %>
-			<% end %>
-			</li>
-			<% end %>
+		<ol id="comments_area">
+			<%= render partial: 'book_comments/index', locals: { book_comments: @book_comments} %>
 		</ol>
-		<%= form_for [@book, @book_comment] do |f| %>
-			<%= f.text_area :comment, rows:'5', class: "form-control" %>
-			<%= f.submit "送信する", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
-		<% end %>
+
+		<div>
+			<%= render partial: 'book_comments/form', locals: { book: @book, book_comment: @book_comment} %>
+		</div>
 	</div>
 </div>
 

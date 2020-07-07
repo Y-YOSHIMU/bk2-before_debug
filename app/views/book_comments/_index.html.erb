@@ -1,0 +1,10 @@
+<li>
+	<% book_comments.each do |book_comment| %>
+		<%= attachment_image_tag(book_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %>
+		<%= book_comment.user.name %>
+		<%= book_comment.comment %>
+		<% if book_comment.user == current_user %>
+		<%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete, remote: true %>
+	<% end %>
+</li>
+<% end %>

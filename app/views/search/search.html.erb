@@ -1,5 +1,5 @@
 <% if @user_or_book == "1" %>
-	<h1>Books search for </h1>
+	<h1>Users search for '<%= @search %>'</h1>
 	<table class="table">
 		<% @users.each do |user| %>
 		<thead>
@@ -20,7 +20,7 @@
 	</table>
 
 <% elsif @user_or_book == "2" %>
-	<h1>Books search for</h1>
+	<h1>Books search for '<%= @search %>'</h1>
 	<table class="table">
 		<% @books.each do |book| %>
 		<thead>
